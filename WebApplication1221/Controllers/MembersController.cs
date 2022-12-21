@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1221.Models.DTOs;
 using WebApplication1221.Models.EFModels;
+using WebApplication1221.Models.Repositories;
+using WebApplication1221.Models.Services;
+using WebApplication1221.Models.VM;
 
 namespace WebApplication1221.Controllers
 {
     public class MembersController : Controller
     {
-        private AppDbContext db = new AppDbContext();
-
+        private IMemberRepository repository;
         // GET: Members
+
+        public MembersController()
+        {
+            repository = new MemberRepository();
+        }
         public ActionResult Index()
         {
-            return View(db.Members.ToList());
+            var data = repository.GetAll();
+            return View(data);
         }
 
         // GET: Members/Details/5
@@ -27,12 +34,16 @@ namespace WebApplication1221.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Member member = db.Members.Find(id);
-            if (member == null)
+            try
+            {
+                Member member = new MemberServices(repository).Find(id.Value);
+                return View(member);
+            }
+            catch (Exception ex)
             {
                 return HttpNotFound();
             }
-            return View(member);
+            
         }
 
         // GET: Members/Create
@@ -42,86 +53,70 @@ namespace WebApplication1221.Controllers
         }
 
         // POST: Members/Create
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Account,Password,CellPhone")] Member member)
+        public ActionResult Create(Member model)
         {
+            try
+            {
+                new MemberServices(repository).Create(model.ToDTO());
+               
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+
             if (ModelState.IsValid)
             {
-                db.Members.Add(member);
-                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            return View(member);
+            return View(model);
         }
 
         // GET: Members/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Member member = db.Members.Find(id);
-            if (member == null)
-            {
-                return HttpNotFound();
-            }
-            return View(member);
+            return View();
         }
 
         // POST: Members/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Account,Password,CellPhone")] Member member)
+        public ActionResult Edit(int id, FormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(member).State = EntityState.Modified;
-                db.SaveChanges();
+                // TODO: Add update logic here
+
                 return RedirectToAction("Index");
             }
-            return View(member);
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Members/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Member member = db.Members.Find(id);
-            if (member == null)
-            {
-                return HttpNotFound();
-            }
-            return View(member);
+            return View();
         }
 
         // POST: Members/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
         {
-            Member member = db.Members.Find(id);
-            db.Members.Remove(member);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
             }
-            base.Dispose(disposing);
+            catch
+            {
+                return View();
+            }
         }
     }
 }

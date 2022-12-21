@@ -135,10 +135,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTOs\MemberDTO.cs" />
+    <Compile Include="Models\DTOs\RegisterDTO.cs" />
     <Compile Include="Models\EFModels\AppDbContext.cs" />
     <Compile Include="Models\EFModels\Member.cs" />
     <Compile Include="Models\EFModels\Register.cs" />
+    <Compile Include="Models\Services\IMemberRepository.cs" />
+    <Compile Include="Models\Repositories\MemberRepository.cs" />
+    <Compile Include="Models\Services\IRegisterRepository.cs" />
+    <Compile Include="Models\Repositories\RegisterRepository.cs" />
+    <Compile Include="Models\Services\MemberServices.cs" />
     <Compile Include="Models\Services\RegisterServices.cs" />
+    <Compile Include="Models\VM\MemberCreateVM.cs" />
+    <Compile Include="Models\VM\MemberEditVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -181,10 +190,10 @@
     <Content Include="Views\Registers\Details.cshtml" />
     <Content Include="Views\Registers\Index.cshtml" />
     <Content Include="Views\Members\Create.cshtml" />
-    <Content Include="Views\Members\Delete.cshtml" />
     <Content Include="Views\Members\Details.cshtml" />
-    <Content Include="Views\Members\Edit.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
