@@ -54,7 +54,7 @@ namespace WebApplication1221.Controllers
 
         // POST: Members/Create
         [HttpPost]
-        public ActionResult Create(Member model)
+        public ActionResult Create(MemberCreateVM model)
         {
             try
             {

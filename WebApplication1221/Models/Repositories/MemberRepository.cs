@@ -6,6 +6,7 @@ using System.Web;
 using WebApplication1221.Models.DTOs;
 using WebApplication1221.Models.EFModels;
 using WebApplication1221.Models.Services;
+using WebApplication1221.Models.VM;
 
 namespace WebApplication1221.Models.Repositories
 {
@@ -22,7 +23,7 @@ namespace WebApplication1221.Models.Repositories
                 Name = dto.Name,
                 Account = dto.Account,
                 Password = dto.Password,
-                CellPhone = dto.CellPhone
+                CellPhone = dto.CellPhone,
 
             };
 

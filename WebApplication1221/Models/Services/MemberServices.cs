@@ -26,7 +26,7 @@ namespace WebApplication1221.Models.Services
             }
 
 
-            //repository.Create(dto);
+               repository.Create(dto);
         }
         public Member Find(int id)
         {

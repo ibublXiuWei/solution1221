@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using WebApplication1221.Models.EFModels;
+using WebApplication1221.Models.VM;
 
 namespace WebApplication1221.Models.DTOs
 {
@@ -21,7 +22,7 @@ namespace WebApplication1221.Models.DTOs
     }
     public static class MemberExtensions
     {
-        public static MemberCreateDTO ToDTO(this Member source)
+        public static MemberCreateDTO ToDTO(this MemberCreateVM source)
         {
             return new MemberCreateDTO
             {
